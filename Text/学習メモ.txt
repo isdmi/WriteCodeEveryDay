@@ -1,0 +1,14 @@
+コレクション式：
+C#12.0で使えるようになった。
+
+https://ufcpp.net/study/csharp/datatype/collection-expression/
+
+
+Span：
+C#7からあるやつ
+配列から一部切り出す。
+パフォーマンスの面で有用だけど、LINQが使えないので注意。
+https://qiita.com/aka-nse/items/cea3c6f91413c3582b5f
+
+Visual Studio、
+開発用PowerShellでdotnet new gitignoreと打つと勝手にgitignoreファイルを作ってくれる。
