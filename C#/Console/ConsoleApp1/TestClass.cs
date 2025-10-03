@@ -64,10 +64,88 @@ namespace ConsoleApp1
             }
         }
 
-        public void LightItUp() 
+        public void Sheeted() 
         {
+            var N = Console.ReadLine();
+            var S = Console.ReadLine();
 
+            if (S == null || N == null) return;
 
+            int count = Convert.ToInt32(N);
+            char[] item = S.ToCharArray();
+            int result = 0;
+
+            for (int i = 0; i < count - 2; i++)
+            {
+                if (item[i] == '#' && item[i + 2] == '#' && item[i + 1] == '.')
+                {
+                    result++;
+                }
+            }
+            Console.WriteLine(result);
+        }
+
+        public void ArithmeticProgression() 
+        {
+            var S = Console.ReadLine();
+
+            if (S == null) return;
+
+            string[] stringArray = S.Split(' ');
+            int Start = Convert.ToInt32(stringArray[0]);
+            int End = Convert.ToInt32(stringArray[1]);
+            int Kosa = Convert.ToInt32(stringArray[2]);
+
+            List<string> Result = new List<string>();
+
+            for (int i = Start; i <= End; i = i + Kosa) 
+            {
+                Result.Add(i.ToString());
+            }
+            Console.WriteLine(string.Join(" ",Result ));
+        }
+
+        public void Racecar() 
+        {
+            var S = Console.ReadLine();
+
+            if (S == null) return;
+            int count = Convert.ToInt32(S);
+            string[] strings = new string[count];
+            bool Result = false;
+
+            for (int i = 0; i < count; i++)
+            {
+                var N = Console.ReadLine();
+                if (N == null) return;
+
+                strings[i] = N;
+            }
+
+            for (int i = 0; i < count; i++) 
+            {
+                for (int j = 0; j < count; j++) 
+                {
+                    if (i == j) continue;
+
+                    // 連結
+                    var checkString = strings[i] + strings[j];
+                    var reverseString = new string(checkString.Reverse().ToArray());
+                    if (checkString == reverseString) 
+                    {
+                        Result = true;
+                        break;
+                    }
+                }
+            }
+
+            if (Result) 
+            {
+                Console.WriteLine("Yes");
+                return;
+            }
+
+            Console.WriteLine("No");
         }
     }
 }
