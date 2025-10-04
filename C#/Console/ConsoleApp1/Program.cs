@@ -1,5 +1,5 @@
 ﻿using ConsoleApp1;
 
-TestClass testClass = new TestClass();
+AtCoder1004 testClass = new AtCoder1004();
 
-testClass.Racecar();
+testClass.UpgradeRequired();
