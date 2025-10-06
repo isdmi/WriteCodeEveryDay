@@ -12,3 +12,12 @@ https://qiita.com/aka-nse/items/cea3c6f91413c3582b5f
 
 Visual Studio、
 開発用PowerShellでdotnet new gitignoreと打つと勝手にgitignoreファイルを作ってくれる。
+
+
+
+Global using C#10
+各コードファイルでいちいち using System; と書かなくてもいいのですっきりできそう。
+global using static SomeClass; のように staticクラスをグローバルスコープにインポートすることも可能。
+
+Required members C#11
+クラスや構造体のプロパティを必須にできる機能。

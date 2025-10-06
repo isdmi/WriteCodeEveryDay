@@ -53,8 +53,8 @@ namespace ConsoleApp1
 
             string[] stringArray = S.Split(' ');
 
-            int pcNumber = Convert.ToInt32(stringArray[0]);
-            int count = Convert.ToInt32(stringArray[1]);
+            int pcNumber = int.Parse(stringArray[0]);
+            int count = int.Parse(stringArray[1]);
  
             string[] input = new string[count];
             int[] resultList = Enumerable.Range(1, pcNumber).ToArray();
@@ -70,8 +70,8 @@ namespace ConsoleApp1
             for (int i = 0; i < count; i++)
             {
                 string[] operation = input[i].Split(' ');
-                int oldVersion = Convert.ToInt32(operation[0]);
-                int newVersion = Convert.ToInt32(operation[1]);
+                int oldVersion = int.Parse(operation[0]);
+                int newVersion = int.Parse(operation[1]);
 
                 int upgradeCount = 0;
 
@@ -82,9 +82,74 @@ namespace ConsoleApp1
                         resultList[j] = newVersion;
                         upgradeCount = upgradeCount + 1;
                     }
+
+                    if (j > oldVersion) 
+                    {
+                        break;
+                    }
                 }
 
                 Console.WriteLine(upgradeCount.ToString());
+            }
+        }
+
+        public void UpgradeRequired2()
+        {
+            var S = Console.ReadLine();
+
+            if (S == null) return;
+
+            string[] stringArray = S.Split(' ');
+
+            int pcNumber = int.Parse(stringArray[0]);
+            int count = int.Parse(stringArray[1]);
+
+            int[] resultList = Enumerable.Range(1, pcNumber).ToArray();
+            int[] verupCount = new int[count];
+
+            int minVersion = 0;
+
+            for (int i = 0; i < count; i++)
+            {
+                var N = Console.ReadLine();
+                if (N == null) return;
+
+                string[] operation = N.Split(' ');
+                int oldVersion = int.Parse(operation[0]);
+                int newVersion = int.Parse(operation[1]);
+
+                if (oldVersion < minVersion) 
+                {
+                    continue;
+                }
+
+                int upgradeCount = 0;
+
+                for (int j = 0; j < pcNumber; j++)
+                {
+                    if (resultList[j] <= oldVersion)
+                    {
+                        resultList[j] = newVersion;
+                        upgradeCount = upgradeCount + 1;
+                    }
+
+                    if (j > oldVersion)
+                    {
+                        break;
+                    }
+                }
+
+                verupCount[i] = upgradeCount;
+
+                if (minVersion < newVersion) 
+                {
+                    minVersion = newVersion;
+                }
+            }
+
+            foreach (int i in verupCount) 
+            {
+                Console.WriteLine(i);
             }
         }
     }
