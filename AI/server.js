@@ -1,6 +1,6 @@
 import http from 'http';
 import OpenAI from 'openai';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 
