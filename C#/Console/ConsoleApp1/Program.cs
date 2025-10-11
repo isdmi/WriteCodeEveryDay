@@ -1,6 +1,6 @@
 ﻿using ConsoleApp1;
 using System;
 
-AtCoder1005 testClass = new AtCoder1005();
+AtCoder1011 testClass = new AtCoder1011();
 
-testClass.SigmaCubes();
+testClass.SumOfDigitsSequence();
