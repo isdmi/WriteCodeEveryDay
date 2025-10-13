@@ -28,7 +28,7 @@ jobs:
       run: dotnet restore C#/Console/GitHubAction.sln
 
     - name: Build
-      run: dotnet build C#/Console/GitHubAction.slnn --configuration ${{ matrix.configuration }} --no-restore
+      run: dotnet build C#/Console/GitHubAction.sln --configuration ${{ matrix.configuration }} --no-restore
 
     - name: Test
       run: dotnet test C#/Console/GitHubAction.sln --no-build --verbosity normal
