@@ -1,6 +1,7 @@
-name: .NET Core Desktop
+name: .NET Desktop
 
 on:
+  workflow_dispatch: ## 手動実行だとこの記述が必要
   push:
     branches: [ "main" ]
   pull_request:
