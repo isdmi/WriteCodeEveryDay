@@ -1,42 +1,34 @@
 name: .NET Desktop
 
 on:
-  workflow_dispatch: ## 手動実行だとこの記述が必要
+  workflow_dispatch:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
+    runs-on: windows-latest
     strategy:
       matrix:
         configuration: [Debug, Release]
 
-    runs-on: windows-latest 
-
     steps:
-    # リポジトリのソースコードを取得
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
-    # .NET SDK (.NET 8) のセットアップ
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
-     # NuGetパッケージの復元（ダウンロード）
-    - name: Restore dependencies  
-      run: dotnet restore
+    - name: Restore dependencies
+      run: dotnet restore C#/Console/GitHubAction.sln
 
-      # プロジェクトをビルド（--no-restoreでrestoreを省略）
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build C#/Console/GitHubAction.slnn --configuration ${{ matrix.configuration }} --no-restore
 
-      # 単体テストを実行（verbosityはログの詳細度でnormalは標準的なログ出力）
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test C#/Console/GitHubAction.sln --no-build --verbosity normal
