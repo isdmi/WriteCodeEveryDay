@@ -4,6 +4,7 @@ import OpenAI from "openai";
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
+import { marked } from "marked";
 
 dotenv.config();
 
@@ -52,6 +53,8 @@ const server = http.createServer(async (req, res) => {
     });
 
     const clothingAdvice = aiResponse.output[0].content[0].text;
+    const clothingHtml = marked.parse(clothingAdvice, { sanitize: true });
+
 
     // --- キャッシュキー生成 ---
     const cacheKey = `${weather}_${tempsText}`.replace(/[^\w一-龠ぁ-んァ-ンー０-９℃]/g, "_");
@@ -109,33 +112,48 @@ const server = http.createServer(async (req, res) => {
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            width: 520px;
+            width: 600px;
             line-height: 1.6;
+          }
+          .info {
+            margin-bottom: 15px;
+          }
+          .advice-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-top: 15px;
           }
           .advice {
             background: #eef6ff;
             padding: 10px;
             border-left: 4px solid #3498db;
-            margin-top: 15px;
             border-radius: 6px;
+            flex: 1;
           }
           img {
-            margin-top: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            width: 256px;
+            height: 256px;
+            object-fit: cover;
           }
         </style>
       </head>
       <body>
         <h1>☀ 名古屋の天気と服装アドバイス</h1>
         <div class="card">
-          <p><strong>天気:</strong> ${weather}</p>
-          <p><strong>今日の気温:</strong> ${tempsText}</p>
-          <div class="advice">
-            <strong>👕 服装アドバイス:</strong><br>
-            ${clothingAdvice}
+          <div class="info">
+            <p><strong>天気:</strong> ${weather}</p>
+            <p><strong>今日の気温:</strong> ${tempsText}</p>
           </div>
-          <img src="${imageUrl}" alt="服装イメージ" width="512" height="512">
+          <div class="advice-container">
+            <div class="advice">
+              <strong>👕 服装アドバイス:</strong><br>
+              ${clothingHtml}
+            </div>
+            <img src="${imageUrl}" alt="服装イメージ">
+          </div>
         </div>
       </body>
       </html>
