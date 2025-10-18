@@ -1,6 +1,4 @@
 ﻿using ConsoleApp1;
-using System;
 
-AtCoder1011 testClass = new AtCoder1011();
-
-testClass.SumOfDigitsSequence();
+AtCoder1018 test = new AtCoder1018();
+test.QuestionC();
