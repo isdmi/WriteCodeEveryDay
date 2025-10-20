@@ -1,44 +1,42 @@
 import json
-import os
 import requests
+import os
 
+LINE_REPLY_ENDPOINT = "https://api.line.me/v2/bot/message/reply"
 CHANNEL_ACCESS_TOKEN = os.environ['CHANNEL_ACCESS_TOKEN']
 
 def lambda_handler(event, context):
-    # LINEからのイベントを取得
-    body = json.loads(event['body'])
-    print(f"Received body: {body}")
+    print(event)
+    body = json.loads(event.get('body', '{}'))
+    for e in body.get('events', []):
+        reply_token = e['replyToken']
 
-    # 応答対象がなければ終了
-    if 'events' not in body or len(body['events']) == 0:
-        return {'statusCode': 200, 'body': 'No event'}
+        if e['type'] == 'message':
+            msg_type = e['message']['type']
 
-    event_data = body['events'][0]
-    reply_token = event_data.get('replyToken')
-    user_message = event_data.get('message', {}).get('text', '')
+            # 📍位置情報メッセージ
+            if msg_type == 'location':
+                lat = e['message']['latitude']
+                lon = e['message']['longitude']
+                address = e['message']['address']
+                reply_text = f"位置情報を受け取りました！\n住所：{address}\n緯度：{lat}\n経度：{lon}"
 
-    if not reply_token:
-        return {'statusCode': 200, 'body': 'No reply token'}
+                reply_message(reply_token, reply_text)
 
-    # 応答メッセージ作成
-    reply_text = f'「{user_message}」と受け取りました！'
+            # 💬 通常のテキストメッセージ
+            elif msg_type == 'text':
+                text = e['message']['text']
+                reply_message(reply_token, f"あなたのメッセージ: {text}")
 
-    # LINE Reply API呼び出し
+    return {"statusCode": 200, "body": "OK"}
+
+def reply_message(token, text):
     headers = {
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {CHANNEL_ACCESS_TOKEN}'
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {CHANNEL_ACCESS_TOKEN}"
     }
     data = {
-        'replyToken': reply_token,
-        'messages': [{'type': 'text', 'text': reply_text}]
+        "replyToken": token,
+        "messages": [{"type": "text", "text": text}]
     }
-
-    response = requests.post(
-        'https://api.line.me/v2/bot/message/reply',
-        headers=headers,
-        data=json.dumps(data)
-    )
-
-    print(f"LINE API response: {response.status_code}, {response.text}")
-
-    return {'statusCode': 200, 'body': 'OK'}
+    requests.post(LINE_REPLY_ENDPOINT, headers=headers, data=json.dumps(data))
