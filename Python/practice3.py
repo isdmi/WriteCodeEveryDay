@@ -1,14 +1,21 @@
+import os
+
 #ToDoアプリ
 def ToDo():
     print("=== ToDo アプリ ===")
+    filename = "todo_list.txt"
     operation_text = "1. 追加\r\n2. 一覧\r\n3. 削除\r\n4. 終了\r\n番号を選んでください:"
     add_text = "追加するToDoを入力してください："
     del_text = "削除するToDoを入力してください："
 
     todos = []
-    while True:
-        text = input(operation_text)
+    if os.path.exists(filename):
+        with open(filename, "r", encoding="utf-8") as f:
+            todos = [line.strip() for line in f if line.strip()]
+
+    while True:     
         try:
+            text = input(operation_text)
             operation = int(text)
         except ValueError:
             print("⚠️ 数字を入力してください。\n")
@@ -46,6 +53,10 @@ def ToDo():
                 print("⚠️ 数字を入力してください。\n")
 
         elif (operation == 4):
+            # ファイルに保存
+            with open(filename, "w", encoding="utf-8") as f:
+                for item in todos:
+                    f.write(item + "\n")
             print("👋 終了します。")
             break
         else:
