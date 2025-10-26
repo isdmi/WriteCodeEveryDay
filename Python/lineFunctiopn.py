@@ -6,6 +6,8 @@ import requests
 import boto3
 import re
 from openai import OpenAI
+from datetime import datetime, timezone
+from decimal import Decimal
 
 LINE_REPLY_URL = "https://api.line.me/v2/bot/message/reply"
 LINE_ACCESS_TOKEN = os.getenv("LINE_CHANNEL_ACCESS_TOKEN")
@@ -14,7 +16,8 @@ BUCKET_NAME = os.getenv("BUCKET_NAME")  # ← Lambda環境変数で設定
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 s3 = boto3.client("s3")
-
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table("LineGPS")
 
 def lambda_handler(event, context):
     try:
@@ -28,6 +31,11 @@ def lambda_handler(event, context):
             if msg_type == "location":
                 lat = e["message"]["latitude"]
                 lon = e["message"]["longitude"]
+                address = e["message"].get("address", "")
+                user_id = e["source"]["userId"]
+
+                # --- DynamoDBに保存 ---
+                save_location(user_id, lat, lon, address)
 
                 area_code, area_name = get_nearest_area(lat, lon)
                 weather, temps_text = get_weather(area_code)
@@ -176,3 +184,16 @@ def format_markdown_for_line(md_text: str) -> str:
     text = re.sub(r"(\n[👕📌⭐])", r"\n\1", text)
 
     return text
+
+def save_location(user_id, lat, lon, address):
+    now = datetime.now(timezone.utc).isoformat()
+    table.put_item(
+        Item={
+            "userId": user_id,
+            "timestamp": now,
+            # float → Decimal に変換
+            "latitude": Decimal(str(lat)),
+            "longitude": Decimal(str(lon)),
+            "address": address,
+        }
+    )
