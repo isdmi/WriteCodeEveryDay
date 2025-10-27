@@ -1,25 +1,19 @@
-import http from 'http';
-import OpenAI from 'openai';
-import dotenv from 'dotenv';
+import express from "express";
+import { fetchNews } from "./fetchNews.js";
 
-dotenv.config();
+const app = express();
+const PORT = 3000;
 
-const server = new http.createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.write(response.output_text);
-    res.end();
+app.get("/news", async (req, res) => {
+  try {
+    const news = await fetchNews();
+    res.json({ count: news.length, news });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "ニュースの取得に失敗しました" });
+  }
 });
 
-const client = new OpenAI({
-  apiKey: process.env['OPENAI_API_KEY'], // This is the default and can be omitted
+app.listen(PORT, () => {
+  console.log(`✅ Server is running: http://localhost:${PORT}`);
 });
-
-const response = await client.responses.create({
-  model: 'gpt-4o',
-  instructions: '日本語で答えてください',
-  input: '一分間スピーチの内容を考えてください',
-});
-
-const port = 8080;
-server.listen(port);
-console.log('Server listen on port ' + port);
