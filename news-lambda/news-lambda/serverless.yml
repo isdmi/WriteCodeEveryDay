@@ -1,0 +1,20 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: ishidadesu
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: news-lambda
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: news-lambda
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-northeast-1
+
+functions:
+  getNews:
+    handler: handler.getNews
+    events:
+      - httpApi:
+          path: /news
+          method: get
+          cors: true
