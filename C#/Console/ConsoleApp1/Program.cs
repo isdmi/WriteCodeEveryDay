@@ -1,4 +1,4 @@
 ﻿using ConsoleApp1;
 
-AtCoder1018 test = new AtCoder1018();
+AtCoder1102 test = new AtCoder1102();
 test.QuestionC();

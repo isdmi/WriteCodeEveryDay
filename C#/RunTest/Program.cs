@@ -11,9 +11,7 @@ string model = "gpt-4o-mini";
 var client = new OpenAIClient(config["OPENAI_KEY"]).GetChatClient(model).AsIChatClient();
 
 var services = new ServiceCollection();
-services.AddAiProofreader(client);
+var processor = services.AddAiProofreader(client).BuildServiceProvider().GetRequiredService<ProofreadFileProcessor>();
 
-var provider = services.BuildServiceProvider();
-var processor = provider.GetRequiredService<ProofreadFileProcessor>();
 
 await processor.ProcessAsync("ishida.txt", "aaaa.txt");
