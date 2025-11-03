@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AiCodeReviewer\AiCodeReviewer.csproj" />
-    <ProjectReference Include="..\AiProofreader\AiProofreader.csproj" />
+    <ProjectReference Include="..\Library\AiCodeReviewer\AiCodeReviewer.csproj" />
+    <ProjectReference Include="..\Library\AiProofreader\AiProofreader.csproj" />
     <ProjectReference Include="..\Library\AiSummarizer\AiSummarizer.csproj" />
   </ItemGroup>
 

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace AiCodeReviewer
 {
@@ -21,7 +19,14 @@ namespace AiCodeReviewer
             {
                 var code = await File.ReadAllTextAsync(inputPath);
                 var result = await _reviewer.ReviewAsync(code, options);
-                var json = System.Text.Json.JsonSerializer.Serialize(result, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+                var serializerOptions = new JsonSerializerOptions
+                {
+                    WriteIndented = true, 
+                    // + とかが文字化けするのでシリアライズを緩くする。
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                };
+
+                var json = JsonSerializer.Serialize(result, serializerOptions);
                 await File.WriteAllTextAsync(outputPath, json);
             }
 
