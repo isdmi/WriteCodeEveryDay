@@ -1,0 +1,33 @@
+﻿<Window x:Class="WPFPractice.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFPractice"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="266" Width="385">
+        <TextBlock Text="{Binding Count}" 
+                   FontSize="32" 
+                   Width="208"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="＋" Width="60" Command="{Binding IncrementCommand}"/>
+            <Button Content="－" Width="60" Command="{Binding DecrementCommand}"/>
+        </StackPanel>
+
+        <TextBlock Text="0〜100 の数字を入力してください:" HorizontalAlignment="Center" />
+
+        <!-- 入力欄（バリデーション付き） -->
+        <TextBox Text="{Binding UserInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                 FontSize="18"
+                 Width="150"/>
+
+        <!-- エラー表示 -->
+        <TextBlock Text="{Binding ErrorsText}" Foreground="Red" />
+
+        <Button Content="決定"
+                Width="100"
+                Command="{Binding SubmitCommand}" />
+
+    </StackPanel>
+</Window>
