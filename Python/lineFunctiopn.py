@@ -5,6 +5,7 @@ import uuid
 import requests
 import boto3
 import re
+import time
 from openai import OpenAI
 from datetime import datetime, timezone
 from decimal import Decimal
@@ -17,7 +18,7 @@ BUCKET_NAME = os.getenv("BUCKET_NAME")  # ← Lambda環境変数で設定
 client = OpenAI(api_key=OPENAI_API_KEY)
 s3 = boto3.client("s3")
 dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("LineGPS")
+table = dynamodb.Table("LineGPS_New")
 
 def lambda_handler(event, context):
     try:
@@ -186,12 +187,12 @@ def format_markdown_for_line(md_text: str) -> str:
     return text
 
 def save_location(user_id, lat, lon, address):
-    now = datetime.now(timezone.utc).isoformat()
+    now = Decimal(str(time.time()))
+
     table.put_item(
         Item={
             "userId": user_id,
             "timestamp": now,
-            # float → Decimal に変換
             "latitude": Decimal(str(lat)),
             "longitude": Decimal(str(lon)),
             "address": address,
