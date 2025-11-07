@@ -1,5 +1,6 @@
 ﻿using AiCodeReviewer;
 using AiProofreader;
+using AiSqlChecker;
 using AiSummarizer;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
@@ -13,8 +14,8 @@ string model = "gpt-4o-mini";
 var client = new OpenAIClient(config["OPENAI_KEY"]).GetChatClient(model).AsIChatClient();
 
 var services = new ServiceCollection();
-services.AddAiCodeReviewer(client);
-services.AddScoped<CodeReviewFileProcessor>();
-var processor = services.BuildServiceProvider().GetRequiredService<CodeReviewFileProcessor>();
+services.AddAiSqlChecker(client);
+services.AddScoped<SqlFileProcessor>();
+var processor = services.BuildServiceProvider().GetRequiredService<SqlFileProcessor>();
 
-await processor.ProcessFileAsync("AtCoder1102.cs", "AtCoder1102.cs.review.json");
+await processor.ProcessFileAsync("ABC.sql");

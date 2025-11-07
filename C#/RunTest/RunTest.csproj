@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Library\AiCodeReviewer\AiCodeReviewer.csproj" />
     <ProjectReference Include="..\Library\AiProofreader\AiProofreader.csproj" />
+    <ProjectReference Include="..\Library\AiSqlChecker\AiSqlChecker.csproj" />
     <ProjectReference Include="..\Library\AiSummarizer\AiSummarizer.csproj" />
   </ItemGroup>
 
