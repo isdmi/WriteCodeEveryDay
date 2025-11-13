@@ -14,5 +14,10 @@ namespace Test
             Collection testClass = new Collection();
             testClass.Test();
         }
+
+        private void aiControlButton1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

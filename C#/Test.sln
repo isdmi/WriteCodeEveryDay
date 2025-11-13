@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiUnitTest", "AiUnitTest\Ai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiSqlChecker", "Library\AiSqlChecker\AiSqlChecker.csproj", "{84795630-E0A5-48BD-8CE3-0CAAAFBF371D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "WindowsForm\Test.csproj", "{5AB2C732-178E-0FC9-7738-E8906C658286}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiCustomControl", "Library\AiCustomControl\AiCustomControl.csproj", "{1E01F976-0768-4F6A-98D2-32F669C8CC46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{84795630-E0A5-48BD-8CE3-0CAAAFBF371D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84795630-E0A5-48BD-8CE3-0CAAAFBF371D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84795630-E0A5-48BD-8CE3-0CAAAFBF371D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AB2C732-178E-0FC9-7738-E8906C658286}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AB2C732-178E-0FC9-7738-E8906C658286}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AB2C732-178E-0FC9-7738-E8906C658286}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AB2C732-178E-0FC9-7738-E8906C658286}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E01F976-0768-4F6A-98D2-32F669C8CC46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E01F976-0768-4F6A-98D2-32F669C8CC46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E01F976-0768-4F6A-98D2-32F669C8CC46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E01F976-0768-4F6A-98D2-32F669C8CC46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -29,31 +29,60 @@
         private void InitializeComponent()
         {
             button1 = new Button();
+            aiTextBox1 = new AiCustomControl.AiTextBox();
+            aiControlButton1 = new AiCustomControl.AiControlButton();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(29, 35);
+            button1.Location = new Point(20, 21);
+            button1.Margin = new Padding(2);
             button1.Name = "button1";
-            button1.Size = new Size(112, 34);
+            button1.Size = new Size(78, 20);
             button1.TabIndex = 0;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // aiTextBox1
+            // 
+            aiTextBox1.Location = new Point(175, 118);
+            aiTextBox1.Name = "aiTextBox1";
+            aiTextBox1.Size = new Size(100, 23);
+            aiTextBox1.TabIndex = 1;
+            aiTextBox1.プロパティ名 = AiCustomControl.選択肢クラス.選択肢1;
+            // 
+            // aiControlButton1
+            // 
+            aiControlButton1.Dock = DockStyle.Right;
+            aiControlButton1.Location = new Point(480, 0);
+            aiControlButton1.Name = "aiControlButton1";
+            aiControlButton1.Size = new Size(80, 270);
+            aiControlButton1.TabIndex = 2;
+            aiControlButton1.Text = "aiControlButton1";
+            aiControlButton1.TextValue = "";
+            aiControlButton1.UseVisualStyleBackColor = true;
+            aiControlButton1.Click += aiControlButton1_Click;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(560, 270);
+            Controls.Add(aiControlButton1);
+            Controls.Add(aiTextBox1);
             Controls.Add(button1);
+            Margin = new Padding(2);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button button1;
+        private AiCustomControl.AiTextBox aiTextBox1;
+        private AiCustomControl.AiControlButton aiControlButton1;
     }
 }
