@@ -39,5 +39,52 @@ namespace ConsoleApp1
 
             Console.WriteLine(new String(charList.ToArray()));
         }
+
+        public void QuestionC()
+        {
+            var S1 = Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToArray();
+            var S2 = Console.ReadLine().Split(' ').Select(x => long.Parse(x)).ToArray();
+
+            var n = S1[0];
+            var x = S1[1];
+            var y = S1[2];
+
+            long minValue = S2.Min();
+            long maxValue = S2.Max();
+
+            if (y * minValue < x * maxValue)
+            {
+                Console.WriteLine("-1");
+                return;
+            }
+            else 
+            {
+                long z = y - x;
+                HashSet<long> modList = new HashSet<long>();
+
+                for (int i = 0; i < n; i++)
+                {
+                    modList.Add((x * S2[i]) % z);
+                }
+
+                if (modList.Count > 1) 
+                {
+                    Console.WriteLine("-1");
+                    return;
+                }
+
+                long g = minValue * y;
+
+                long ans = 0;
+
+                for (int i = 0; i < n; i++) 
+                {
+                    ans += (g - x * S2[i]) / z;
+                }
+
+                Console.WriteLine(ans);
+            }
+
+        }
     }
 }
