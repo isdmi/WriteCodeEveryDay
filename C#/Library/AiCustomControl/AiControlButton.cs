@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,37 +9,34 @@ namespace AiCustomControl
 {
     public class AiControlButton : Button
     {
-        TextBox textBox;
+        List<AiTextBox> _AiTextBoxList = new List<AiTextBox>();
 
         public AiControlButton()
         {
-            // TextBox
-            textBox = new TextBox();
-            textBox.Dock = DockStyle.Fill;
-
-            this.Text = "貼り付け";
-            this.Dock = DockStyle.Right;
-            this.Width = 80;
-            this.Click += PasteButton_Click;
+            this.Click += AiControlButton_Click;
         }
 
-        private void PasteButton_Click(object sender, EventArgs e)
+        [Browsable(true)]
+        [Description("BindTextBox")]
+        [Category("Custom")]
+        public List<AiTextBox> AiTextBoxList
         {
-            if (Clipboard.ContainsText())
-            {
-                textBox.Text = Clipboard.GetText();
-            }
-            else
-            {
-                MessageBox.Show("クリップボードにテキストがありません。", "情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            get { return _AiTextBoxList; }
+            set { _AiTextBoxList = value; }
         }
 
-        // 外部からTextBox内容にアクセスできるようにする
-        public string TextValue
+        private void AiControlButton_Click(object? sender, EventArgs e)
         {
-            get => textBox.Text;
-            set => textBox.Text = value;
+            if (_AiTextBoxList.Any()) 
+            {
+                if (Clipboard.ContainsText())
+                {
+                    string Text = Clipboard.GetText();
+
+
+                }
+            }
+
         }
     }
 }
