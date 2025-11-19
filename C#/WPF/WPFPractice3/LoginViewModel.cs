@@ -7,6 +7,8 @@ namespace WPFPractice3
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
+        public event Action LoginSucceeded;
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged(string name)
@@ -75,6 +77,9 @@ namespace WPFPractice3
             {
                 // ログイン成功時の処理
                 MessageBox.Show("Login successful!");
+
+                ErrorMessage = "";
+                LoginSucceeded?.Invoke();   // ← ログイン成功を通知
             }
             else
             {

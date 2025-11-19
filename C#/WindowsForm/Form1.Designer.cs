@@ -47,7 +47,7 @@
             // 
             // aiControlButton1
             // 
-            aiControlButton1.Location = new Point(354, 118);
+            aiControlButton1.Location = new Point(292, 109);
             aiControlButton1.Name = "aiControlButton1";
             aiControlButton1.Size = new Size(75, 23);
             aiControlButton1.TabIndex = 1;
@@ -56,7 +56,7 @@
             // 
             // aiTextBox1
             // 
-            aiTextBox1.Location = new Point(384, 173);
+            aiTextBox1.Location = new Point(292, 160);
             aiTextBox1.Name = "aiTextBox1";
             aiTextBox1.Size = new Size(100, 23);
             aiTextBox1.TabIndex = 2;
