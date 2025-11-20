@@ -11,10 +11,10 @@ namespace WPFPractice3
 
     public class RelayCommand : ICommand
     {
-        private readonly Action<object> _execute;
+        private readonly Action _execute;
         private readonly Func<bool> _canExecute;
 
-        public RelayCommand(Action<object> execute, Func<bool> canExecute = null)
+        public RelayCommand(Action execute, Func<bool> canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;
@@ -27,7 +27,7 @@ namespace WPFPractice3
 
         public void Execute(object parameter)
         {
-            _execute(parameter);
+            _execute();
         }
 
         public event EventHandler CanExecuteChanged

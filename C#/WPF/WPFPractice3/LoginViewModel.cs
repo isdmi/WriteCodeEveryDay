@@ -7,6 +7,8 @@ namespace WPFPractice3
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
+        private readonly EmployeeRepository _repository = new EmployeeRepository();
+
         public event Action LoginSucceeded;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -66,20 +68,21 @@ namespace WPFPractice3
 
         public LoginViewModel()
         {
-            LoginCommand = new RelayCommand(Login);
+            LoginCommand = new RelayCommand(async () => await Login());
         }
 
-        private void Login(object parameter)
+        private async Task Login()
         {
-            // ここでユーザー名とパスワードを検証するロジックを実装する
+            ErrorMessage = "";
 
-            if (UserId == "user" && Password == "password")
+            var employee = await _repository.GetEmployeeAsync(UserId, Password);
+
+            if (employee != null)
             {
                 // ログイン成功時の処理
                 MessageBox.Show("Login successful!");
 
-                ErrorMessage = "";
-                LoginSucceeded?.Invoke();   // ← ログイン成功を通知
+                LoginSucceeded?.Invoke();
             }
             else
             {

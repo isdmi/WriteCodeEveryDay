@@ -485,3 +485,5 @@ $RECYCLE.BIN/
 
 # Node.js
 /.env
+/C#/WPF/WPFPractice3/App.config
+/C#/WPF/WPFPractice3/Properties
