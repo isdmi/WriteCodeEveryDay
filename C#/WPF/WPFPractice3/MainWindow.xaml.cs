@@ -19,9 +19,14 @@ namespace WPFPractice3
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private Employee _employee;
+
+        public MainWindow(Employee emp)
         {
             InitializeComponent();
+            _employee = emp;
+
+            WelcomeText.Text = $"{_employee.EmployeeName} さん、ようこそ！";
         }
     }
 }

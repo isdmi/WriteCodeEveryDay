@@ -46,10 +46,10 @@ namespace WPFPractice3
             }
         }
 
-        private void OnLoginSucceeded()
+        private void OnLoginSucceeded(Employee emp)
         {
             // メイン画面を開く
-            var mainWindow = new MainWindow();
+            var mainWindow = new MainWindow(emp);
             mainWindow.Show();
 
             // このログイン画面を閉じる

@@ -9,7 +9,7 @@ namespace WPFPractice3
     {
         private readonly EmployeeRepository _repository = new EmployeeRepository();
 
-        public event Action LoginSucceeded;
+        public event Action<Employee> LoginSucceeded;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -82,7 +82,7 @@ namespace WPFPractice3
                 // ログイン成功時の処理
                 MessageBox.Show("Login successful!");
 
-                LoginSucceeded?.Invoke();
+                LoginSucceeded?.Invoke(employee);
             }
             else
             {

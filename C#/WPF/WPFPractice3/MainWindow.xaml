@@ -11,5 +11,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="32" />
+        <TextBlock x:Name="WelcomeText"
+           FontSize="22" Margin="20"/>
     </Grid>
 </Window>
