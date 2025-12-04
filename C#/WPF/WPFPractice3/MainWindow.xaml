@@ -6,12 +6,41 @@
         xmlns:local="clr-namespace:WPFPractice3"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 検索欄 -->
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
+            <TextBlock Text="名前：" VerticalAlignment="Center"/>
+            <TextBox Width="150" Margin="5 0"
+                     Text="{Binding SearchName, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
         <TextBlock Text="メイン画面です"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="32" />
         <TextBlock x:Name="WelcomeText"
-           FontSize="22" Margin="20"/>
+           FontSize="22" Margin="20"/>        
+        
+        <!-- 社員一覧 -->
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding Employees}"
+                  AutoGenerateColumns="False">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="社員ID" Binding="{Binding Id}" Width="80"/>
+                <DataGridTextColumn Header="氏名" Binding="{Binding Name}" Width="150"/>
+                <DataGridTextColumn Header="部署" Binding="{Binding Department}" Width="120"/>
+                <DataGridTextColumn Header="メール" Binding="{Binding Email}" Width="200"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
     </Grid>
+
+
 </Window>

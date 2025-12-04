@@ -25,7 +25,7 @@ namespace WPFPractice3
         {
             InitializeComponent();
             _employee = emp;
-
+            DataContext = new MainViewModel();
             WelcomeText.Text = $"{_employee.EmployeeName} さん、ようこそ！";
         }
     }
