@@ -55,5 +55,31 @@ namespace ConsoleApp1
 
             Console.WriteLine(ans);
         }
+
+        public void QuestionC() 
+        {
+            var S1 = Console.ReadLine();
+            int N = int.Parse(S1);
+
+            var S2 = Console.ReadLine();
+            var array1 = S2.Split(' ').Select(x => int.Parse(x)).ToList();
+
+            int cnt = 1;
+
+            for (int i = 0; i < N; i++)
+            {
+                if (i >= cnt) 
+                {
+                    Console.WriteLine(i);
+                    return;
+                }
+
+                var height = array1[i];
+
+                cnt = Math.Max(cnt, i + height);
+            }
+
+            Console.WriteLine(N);
+        }
     }
 }
