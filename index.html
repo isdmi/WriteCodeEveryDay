@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>体調入力フォーム</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h2 { margin-top: 30px; }
+    label { margin-right: 10px; }
+    input[type="number"] { width: 60px; }
+    textarea { width: 100%; height: 60px; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+
+<h1>体調入力</h1>
+
+<!-- 日付 -->
+<label>日付：
+  <input type="date" id="date">
+</label>
+
+<h2>■ 現在の体調</h2>
+<select id="conditionCurrent">
+  <option value="VERY_GOOD">とても良い</option>
+  <option value="GOOD">良い</option>
+  <option value="NORMAL">普通</option>
+  <option value="SLIGHT_BAD">やや不調</option>
+  <option value="BAD">不調</option>
+  <option value="VERY_BAD">非常に不調</option>
+</select>
+
+<h2>■ 体調の変化（昨日比）</h2>
+<select id="conditionChange">
+  <option value="BETTER">良くなった</option>
+  <option value="SAME">変わらない</option>
+  <option value="WORSE">悪化した</option>
+</select>
+
+<h2>■ 生活リズム</h2>
+睡眠：
+<select id="sleep">
+  <option value="SHORT">短い</option>
+  <option value="NORMAL">変わらない</option>
+  <option value="LONG">長い</option>
+</select>
+<br><br>
+朝食：
+<label><input type="radio" name="breakfast" value="true" checked>取った</label>
+<label><input type="radio" name="breakfast" value="false">取っていない</label>
+
+<h2>■ 主な症状（1～5）</h2>
+<div>
+  だるさ <input type="number" id="fatigue" min="0" max="5"><br>
+  頭痛 <input type="number" id="headache" min="0" max="5"><br>
+  発熱 <input type="number" id="fever" min="0" max="5"><br>
+  咳 <input type="number" id="cough" min="0" max="5"><br>
+  腹痛 <input type="number" id="stomachache" min="0" max="5"><br>
+  吐き気 <input type="number" id="nausea" min="0" max="5"><br>
+  めまい <input type="number" id="dizziness" min="0" max="5"><br>
+</div>
+
+<h2>■ 業務への影響</h2>
+業務遂行可能度：
+<input type="number" id="performance" min="0" max="100"> / 100
+<br><br>
+制限事項：
+<textarea id="restriction"></textarea>
+
+<h2>■ その他</h2>
+<textarea id="freeNote"></textarea>
+
+<br><br>
+<button onclick="submitForm()">送信</button>
+
+<script>
+const API_URL = "https://ww1yg5g9ol.execute-api.ap-northeast-1.amazonaws.com/test/"; // ←変更
+
+function submitForm() {
+  const data = {
+    userId: "user001",
+    date: document.getElementById("date").value,
+
+    conditionCurrent: document.getElementById("conditionCurrent").value,
+    conditionChange: document.getElementById("conditionChange").value,
+
+    sleep: document.getElementById("sleep").value,
+    breakfast: document.querySelector('input[name="breakfast"]:checked').value === "true",
+
+    symptoms: {
+      fatigue: Number(document.getElementById("fatigue").value || 0),
+      headache: Number(document.getElementById("headache").value || 0),
+      fever: Number(document.getElementById("fever").value || 0),
+      cough: Number(document.getElementById("cough").value || 0),
+      stomachache: Number(document.getElementById("stomachache").value || 0),
+      nausea: Number(document.getElementById("nausea").value || 0),
+      dizziness: Number(document.getElementById("dizziness").value || 0)
+    },
+
+    workImpact: {
+      performance: Number(document.getElementById("performance").value || 0),
+      restriction: document.getElementById("restriction").value
+    },
+
+    freeNote: document.getElementById("freeNote").value
+  };
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+      // API Key を使う場合
+      // "x-api-key": "xxxxxxxx"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(result => {
+    alert("送信成功");
+    console.log(result);
+  })
+  .catch(err => {
+    alert("送信失敗");
+    console.error(err);
+  });
+}
+</script>
+
+</body>
+</html>

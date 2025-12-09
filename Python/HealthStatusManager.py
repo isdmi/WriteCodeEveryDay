@@ -6,44 +6,47 @@ from decimal import Decimal
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table("HealthStatus")
 
+def to_decimal(value):
+    return Decimal(str(value))
+
 def lambda_handler(event, context):
 
-    if "body" in event:
-        try:
-            body = json.loads(event["body"])
-        except:
-            return {
-                "statusCode": 400,
-                "body": json.dumps({"error": "Invalid JSON"})
-            }
-    else:
-        body = event
-
-    # 必須項目チェック
-    required = ["userId", "temperature", "condition"]
-    for r in required:
-        if r not in body:
-            return {
-                "statusCode": 400,
-                "body": json.dumps({"error": f"Missing field: {r}"})
-            }
-
-    # 数値（float）を Decimal に変換
-    temperature = Decimal(str(body["temperature"]))
-
-    today = datetime.now().strftime("%Y-%m-%d")
+    body = json.loads(event["body"]) if "body" in event else event
 
     item = {
         "userId": body["userId"],
-        "date": today,
-        "temperature": temperature,
-        "condition": body["condition"],
-        "memo": body.get("memo", "")
+        "date": body["date"],  # YYYY-MM-DD
+
+        "conditionCurrent": body["conditionCurrent"],
+        "conditionChange": body["conditionChange"],
+
+        "sleep": body["sleep"],
+        "breakfast": body["breakfast"],
+
+        "symptoms": {
+            "fatigue": to_decimal(body["symptoms"]["fatigue"]),
+            "headache": to_decimal(body["symptoms"]["headache"]),
+            "fever": to_decimal(body["symptoms"]["fever"]),
+            "cough": to_decimal(body["symptoms"]["cough"]),
+            "stomachache": to_decimal(body["symptoms"]["stomachache"]),
+            "nausea": to_decimal(body["symptoms"]["nausea"]),
+            "dizziness": to_decimal(body["symptoms"]["dizziness"]),
+            "otherScore": to_decimal(body["symptoms"].get("otherScore", 0)),
+            "otherText": body["symptoms"].get("otherText", "")
+        },
+
+        "workImpact": {
+            "performance": to_decimal(body["workImpact"]["performance"]),
+            "restriction": body["workImpact"].get("restriction", "")
+        },
+
+        "freeNote": body.get("freeNote", ""),
+        "createdAt": datetime.now().isoformat()
     }
 
     table.put_item(Item=item)
 
     return {
         "statusCode": 200,
-        "body": json.dumps({"message": "saved", "data": item}, default=str)
+        "body": json.dumps({"message": "saved"}, ensure_ascii=False)
     }
